@@ -14,7 +14,7 @@ from stonks_analytics_scraper.utils.data_type import DataType
 class Scraper:
     browser: WebDriver
 
-    def __init__(self, base_url="https://investidor10.com.br", data_shape=None):
+    def __init__(self, base_url="https://investidor10.com.br", data_shape: list[dict]=None):
         self.base_url = base_url
         self.data_shape = data_shape
 
@@ -27,7 +27,10 @@ class Scraper:
         data = {}
 
         for data_type in self.data_shape:
-            data[data_type["name"]] = self._get_data(data_type)
+            try:
+                data[data_type["name"]] = self._get_data(data_type)
+            except Exception:
+                raise ValueError(f"field {data_type['name']} not found in resource {resource}")
 
         self._close_browser()
 
@@ -54,10 +57,10 @@ class Scraper:
             wait.until(EC.visibility_of(first_result))
             first_result.click()
 
-        except:
-            self.browser.quit()
+        except Exception:
+            self._close_browser()
 
-            raise ValueError("resource not found")
+            raise ValueError(f"resource not found: {resource}")
 
     def _close_browser(self):
         self.browser.quit()
@@ -80,16 +83,16 @@ class Scraper:
     def _get_numeric(self, xpath: str) -> float:
         value = self._wait_value(xpath).replace(".", "").replace(",", ".")
 
-        scale = 10**0
+        scale = 10 ** 0
 
         if "Bilhões" in value or "B" in value:
-            scale = 10**9
+            scale = 10 ** 9
 
         elif "Milhões" in value or "M" in value:
-            scale = 10**6
+            scale = 10 ** 6
 
         elif "Mil" in value or "K" in value:
-            scale = 10**3
+            scale = 10 ** 3
 
         # if numeric in % type return numeric + %
         if "%" in value:

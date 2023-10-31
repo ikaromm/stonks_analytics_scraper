@@ -1,4 +1,4 @@
-from multiprocessing import Process
+from datetime import datetime
 from threading import Thread
 
 from stonks_analytics_scraper.scraper.shape.stocks import STOCK_SHAPE
@@ -20,6 +20,8 @@ def create_scraper_worker(args, results):
 
 
 def main():
+    scraper = Scraper(data_shape=STOCK_SHAPE)
+
     companies = [
         "petr4",
         "vale3",
@@ -34,6 +36,8 @@ def main():
         "cple6",
     ]
 
+    start_time = datetime.now()
+
     results = []
     threads = []
     for company in companies:
@@ -45,8 +49,15 @@ def main():
     for thread in threads:
         thread.join()
 
+    # results = [scraper.scrape(company) for company in companies]
+
     for result in results:
         print(result)
+
+    # Normal execution runs in 1min 30s
+    # Threaded execution runs in 24s
+
+    print(f"\n\n--- Executado em: {(datetime.now() - start_time)} ---\n\n")
 
 
 if __name__ == "__main__":

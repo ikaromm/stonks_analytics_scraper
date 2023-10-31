@@ -1,9 +1,9 @@
-from stonks_analytics_scraper.scraper.format.stocks import STOCK_FORMAT
+from stonks_analytics_scraper.scraper.shape.stocks import STOCK_SHAPE
 from stonks_analytics_scraper.scraper.scraper import Scraper
 
 
 def main():
-    scraper = Scraper(data_format=STOCK_FORMAT)
+    scraper = Scraper(data_shape=STOCK_SHAPE)
 
     companies = [
         "petr4",

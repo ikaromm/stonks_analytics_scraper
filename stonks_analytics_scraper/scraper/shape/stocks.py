@@ -1,6 +1,6 @@
 from stonks_analytics_scraper.utils.data_type import DataType
 
-STOCK_FORMAT = [
+STOCK_SHAPE = [
     {
         "name": "company_name",
         "path": '//*[@id="header_action"]/div[1]/div[2]/h2',
@@ -12,8 +12,9 @@ STOCK_FORMAT = [
         "type": DataType.STRING,
     },
     {
+        # net revenue = lucro liquido
         "name": "net_revenue",
         "path": '//*[@id="table-balance-results"]/tbody/tr[2]/td[2]/div[1]',
         "type": DataType.NUMERIC,
-    }
+    },
 ]

@@ -1,4 +1,6 @@
 from datetime import datetime
+import re
+import time
 
 from selenium import webdriver
 from selenium.webdriver.chrome.webdriver import WebDriver
@@ -12,19 +14,19 @@ from stonks_analytics_scraper.utils.data_type import DataType
 class Scraper:
     browser: WebDriver
 
-    def __init__(self, base_url="https://investidor10.com.br", data_format=None):
+    def __init__(self, base_url="https://investidor10.com.br", data_shape=None):
         self.base_url = base_url
-        self.data_format = data_format
+        self.data_shape = data_shape
 
-        if self.data_format is None:
-            raise ValueError("data_format must be specified")
+        if self.data_shape is None:
+            raise ValueError("data_shape must be specified")
 
     def scrape(self, resource: str) -> dict:
         self._open_resource(resource)
 
         data = {}
 
-        for data_type in self.data_format:
+        for data_type in self.data_shape:
             data[data_type["name"]] = self._get_data(data_type)
 
         self._close_browser()
@@ -76,8 +78,31 @@ class Scraper:
         return self._wait_value(xpath)
 
     def _get_numeric(self, xpath: str) -> float:
-        value = self._wait_value(xpath)
-        return float(value.replace(".", "").replace(",", "."))
+        value = self._wait_value(xpath).replace(".", "").replace(",", ".")
+
+        scale = 10**0
+
+        if "Bilhões" in value or "B" in value:
+            scale = 10**9
+
+        elif "Milhões" in value or "M" in value:
+            scale = 10**6
+
+        elif "Mil" in value or "K" in value:
+            scale = 10**3
+
+        # if numeric in % type return numeric + %
+        if "%" in value:
+            percentage_text = value.rstrip(
+                "%"
+            )  # Remove the percentage sign from the end
+            return float(percentage_text)
+
+        # if field empty return 0
+        if "-" == value:
+            return float(0)
+
+        return float(re.sub("[^\\d.-]", "", value)) * scale
 
     def _get_date(self, data_type: dict) -> datetime:
         value = self._wait_value(data_type["path"])

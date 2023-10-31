@@ -12,7 +12,7 @@ STOCK_SHAPE = [
         "type": DataType.STRING,
     },
     {
-        # net revenue = lucro liquido
+        # net revenue = receita liquida
         "name": "net_revenue",
         "path": '//*[@id="table-balance-results"]/tbody/tr[2]/td[2]/div[1]',
         "type": DataType.NUMERIC,

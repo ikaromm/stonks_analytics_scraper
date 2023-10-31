@@ -1,0 +1,23 @@
+[tool.poetry]
+name = "stonks-analytics-scraper"
+version = "0.0.1"
+description = ""
+authors = ["Ikaro Moribayashi <ikaromm@hotmail.com>"]
+license = "MIT"
+readme = "README.md"
+packages = [{include = "stonks_analytics_scraper"}]
+
+[tool.poetry.dependencies]
+python = ">=3.10,<3.13"
+selenium = "^4.14.0"
+python-dotenv = "^1.0.0"
+numpy = "^1.26.1"
+SQLAlchemy = "^2.0.22"
+pandas = "^2.1.2"
+
+[tool.poetry.group.dev.dependencies]
+black = "^23.10.1"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"

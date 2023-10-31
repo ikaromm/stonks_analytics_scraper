@@ -2,4 +2,8 @@
 .idea/
 
 .vscode/
-stonks_analytics_scraper/__pycache__/
+
+.env*
+
+**/__pycache__/
+*.pyc

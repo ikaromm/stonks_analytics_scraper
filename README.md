@@ -1,3 +1,12 @@
+# Resumo 
+Projeto de pesquisa e análise financeira, focalizado na obtenção de
+informações detalhadas por meio de pesquisas personalizadas no site
+"Investidor 10". Exploração de correlações entre indicadores econômicos,
+otimização de carteira com algoritmos genéticos e análise de séries
+temporais com o Prophet. Objetivo: montar uma API para fazer querys de
+perguntas para o banco de dados e retornar as empresas de interesse.
+
+
 # Objetivos do Projeto
 
 O projeto terá:

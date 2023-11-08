@@ -184,7 +184,7 @@ STOCK_SHAPE = [
         "name": "debt_to_equity",
         "path": '//*[@id="table-indicators"]/div[26]/div[1]/span',
         "type": DataType.NUMERIC,
-    }
+    },
     {
         # passivos / ativos
         "name": "passives_to_actives",

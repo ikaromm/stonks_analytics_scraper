@@ -1,10 +1,13 @@
+from sqlalchemy import ForeignKey, Double
+from sqlalchemy.orm import mapped_column, relationship, Mapped
+
 from stonks_analytics_scraper.db.entity.base import Base
 
 
 class StockStatistics(Base):
     __tablename__ = 'stock_statistics'
 
-    stock_id = mapped_column(BigInteger, nullable=False)
+    stock_id = mapped_column(ForeignKey("stock.id"), nullable=False)
 
     net_revenue = mapped_column(Double, nullable=True)
     ebitda = mapped_column(Double, nullable=True)

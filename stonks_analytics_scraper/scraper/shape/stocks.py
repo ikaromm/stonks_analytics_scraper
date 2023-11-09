@@ -2,13 +2,31 @@ from stonks_analytics_scraper.utils.data_type import DataType
 
 STOCK_SHAPE = [
     {
-        "name": "company_name",
+        "name": "name",
         "path": '//*[@id="header_action"]/div[1]/div[2]/h2',
         "type": DataType.STRING,
     },
     {
         "name": "cnpj",
         "path": '//*[@id="data_about"]/div[2]/div/div[1]/table/tbody/tr[2]/td[2]',
+        "type": DataType.STRING,
+    },
+    {
+        # Ano de criação
+        "name": "foundation_date",
+        "path": '//*[@id="data_about"]/div[2]/div/div[1]/table/tbody/tr[5]/td[2]',
+        "type": DataType.NUMERIC,
+    },
+    {
+        # Setor
+        "name": "sector",
+        "path": '//*[@id="table-indicators-company"]/div[14]/a/span[2]',
+        "type": DataType.STRING,
+    },
+    {
+        # Segmento
+        "name": "segment",
+        "path": '//*[@id="table-indicators-company"]/div[15]/a/span[2]',
         "type": DataType.STRING,
     },
     {
@@ -37,50 +55,50 @@ STOCK_SHAPE = [
     },
     {
         # Divida Bruta
-        "name": "gross debt",
+        "name": "gross_debt",
         "path": '//*[@id="table-balance-results"]/tbody/tr[9]/td[2]/div[1]',
         "type": DataType.NUMERIC,
     },
     {
+        # Lucro Bruto
+        "name": "gross_profit",
+        "path": '//*[@id="table-balance-results"]/tbody/tr[4]/td[2]/div[1]',
+        "type": DataType.NUMERIC,
+    },
+    {
+        # Margem Bruta
+        "name": "gross_margin",
+        "path": '//*[@id="table-balance-results"]/tbody/tr[11]/td[2]',
+        "type": DataType.NUMERIC,
+    },
+    {
         # Divida liquida
-        "name": "net debt",
+        "name": "net_debt",
         "path": '//*[@id="table-balance-results"]/tbody/tr[10]/td[2]/div[1]',
         "type": DataType.NUMERIC,
     },
     {
         # Lucro liquido
-        "name": "net revenue",
+        "name": "net_profit",
         "path": '//*[@id="table-balance-results"]/tbody/tr[5]/td[2]/div[1]',
         "type": DataType.NUMERIC,
     },
     {
-        # Lucro Bruto
-        "name": "gross profit",
-        "path": '//*[@id="table-balance-results"]/tbody/tr[4]/td[2]/div[1]',
+        # Margem Líquida
+        "name": "net_margin",
+        "path": '//*[@id="table-balance-results"]/tbody/tr[13]/td[2]',
+        "type": DataType.NUMERIC,
+    },
+    {
+        # Margem Ebita
+        "name": "ebitda_margin",
+        "path": '//*//*[@id="table-balance-results"]/tbody/tr[12]/td[2]',
         "type": DataType.NUMERIC,
     },
     {
         # Custo
         "name": "cost",
         "path": '//*[@id="table-balance-results"]/tbody/tr[3]/td[2]/div[1]',
-        "type": DataType.NUMERIC,
-    },
-    {
-        # Margem Bruta
-        "name": "gross margin",
-        "path": '//*[@id="table-balance-results"]/tbody/tr[11]/td[2]',
-        "type": DataType.NUMERIC,
-    },
-    {
-        # Margem Ebita
-        "name": "ebitda margin",
-        "path": '//*//*[@id="table-balance-results"]/tbody/tr[12]/td[2]',
-        "type": DataType.NUMERIC,
-    },
-    {
-        # Margem Líquida
-        "name": "net margin",
-        "path": '//*[@id="table-balance-results"]/tbody/tr[13]/td[2]',
         "type": DataType.NUMERIC,
     },
     {
@@ -120,18 +138,6 @@ STOCK_SHAPE = [
         "type": DataType.NUMERIC,
     },
     {
-        # CNPJ
-        "name": "cnpj",
-        "path": '//*[@id="data_about"]/div[2]/div/div[1]/table/tbody/tr[2]/td[2]',
-        "type": DataType.STRING,
-    },
-    {
-        # Ano de criação
-        "name": "year",
-        "path": '//*[@id="data_about"]/div[2]/div/div[1]/table/tbody/tr[5]/td[2]',
-        "type": DataType.DATE,
-    },
-    {
         # VPA
         "name": "vpa",
         "path": '//*[@id="table-indicators"]/div[17]/div[1]/span',
@@ -142,18 +148,6 @@ STOCK_SHAPE = [
         "name": "lpa",
         "path": '//*[@id="table-indicators"]/div[18]/div[1]/span',
         "type": DataType.NUMERIC,
-    },
-    {
-        # Setor
-        "name": "sector",
-        "path": '//*[@id="table-indicators-company"]/div[14]/a/span[2]',
-        "type": DataType.STRING,
-    },
-    {
-        # Segmento
-        "name": "segment",
-        "path": '//*[@id="table-indicators-company"]/div[15]/a/span[2]',
-        "type": DataType.STRING,
     },
     {
         # Tag Along

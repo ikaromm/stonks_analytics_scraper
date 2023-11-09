@@ -21,7 +21,7 @@ class Stock(Base):
     ticker = mapped_column(String(10), nullable=False)
     foundation_date = mapped_column(Date, nullable=True)
     sector = mapped_column(String(50), nullable=True)
-    subsector = mapped_column(String(50), nullable=True)
+    segment = mapped_column(String(50), nullable=True)
 
     stock_prices: Mapped[List["StockPrice"]] = relationship(
         back_populates="stock", cascade="all, delete-orphan"

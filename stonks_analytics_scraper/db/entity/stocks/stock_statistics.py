@@ -19,6 +19,7 @@ class StockStatistics(Base):
     net_debt = mapped_column(Double, nullable=True)
     net_profit = mapped_column(Double, nullable=True)
     net_margin = mapped_column(Double, nullable=True)
+    ebitda_margin = mapped_column(Double, nullable=True)
     cost = mapped_column(Double, nullable=True)
     roe = mapped_column(Double, nullable=True)
     roa = mapped_column(Double, nullable=True)

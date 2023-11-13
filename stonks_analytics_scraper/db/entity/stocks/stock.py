@@ -5,6 +5,9 @@ from sqlalchemy import String, Date
 from sqlalchemy.orm import DeclarativeBase, Mapped, mapped_column, relationship
 from sqlalchemy.schema import UniqueConstraint, Index
 
+from stonks_analytics_scraper.db.entity.stocks.stock_price import StockPrice
+from stonks_analytics_scraper.db.entity.stocks.stock_statistics import StockStatistics
+
 
 class Stock(Base):
     __tablename__ = 'stock'

@@ -161,14 +161,14 @@ STOCK_SHAPE = [
         "path": '//*[@id="table-indicators-company"]/div[11]/span[2]',
         "type": DataType.NUMERIC,
     },
-    {  
+    {
         # CAGR receita
         "name": "cagr_revenue",
         "path": '//*[@id="table-indicators"]/div[30]/div[1]/span',
         "type": DataType.NUMERIC,
     },
     {
-        # CAGR lucro 
+        # CAGR lucro
         "name": "cagr_profit",
         "path": '//*[@id="table-indicators"]/div[30]/div[1]/span',
         "type": DataType.NUMERIC,
@@ -184,5 +184,5 @@ STOCK_SHAPE = [
         "name": "passives_to_actives",
         "path": '//*[@id="table-indicators"]/div[28]/div[1]/span',
         "type": DataType.NUMERIC,
-    }
+    },
 ]

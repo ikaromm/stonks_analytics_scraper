@@ -3,17 +3,17 @@ from stonks_analytics_scraper.db.repository.stock_repository import (
     StockRepository,
 )
 from stonks_analytics_scraper.db.service.stock_service import StockService
+from stonks_analytics_scraper.scraper.resource_type import ResourceType
 from stonks_analytics_scraper.scraper.scraper import Scraper
 from stonks_analytics_scraper.scraper.shape.stocks import STOCK_SHAPE
 
 from sqlalchemy import URL, create_engine
 
-from concurrent.futures import ThreadPoolExecutor, as_completed, wait
-from threading import Thread
+from concurrent.futures import ProcessPoolExecutor, as_completed
 
 
 def thread_worker(resource: str):
-    return Scraper(data_shape=STOCK_SHAPE).scrape(resource)
+    return Scraper(resource_type=ResourceType.STOCK).scrape(resource)
 
 
 def main():
@@ -48,7 +48,7 @@ def main():
 
     futures = []
 
-    with ThreadPoolExecutor(max_workers=2) as executor:
+    with ProcessPoolExecutor(max_workers=4) as executor:
         for company in companies:
             future = executor.submit(thread_worker, company)
             futures.append(future)

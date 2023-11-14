@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+from stonks_analytics_scraper.scraper.resource_type import ResourceType
 from stonks_analytics_scraper.utils.data_type import DataType
 
 from selenium import webdriver
@@ -16,19 +17,21 @@ from datetime import datetime
 class Scraper:
     browser: WebDriver
 
-    def __init__(self, base_url="https://investidor10.com.br", data_shape=None):
+    def __init__(
+        self, base_url="https://investidor10.com.br", resource_type: ResourceType = None
+    ):
         self.base_url = base_url
-        self.data_shape = data_shape
+        self.resource_type = resource_type
 
-        if self.data_shape is None:
-            raise ValueError("data_shape must be specified")
+        if resource_type is None:
+            raise ValueError("resource_type must be specified")
 
     def scrape(self, resource: str) -> dict:
         self._open_resource(resource)
 
         data = {"ticker": resource}
 
-        for data_type in self.data_shape:
+        for data_type in self.resource_type.get_shape():
             data[data_type["name"]] = self._get_data(data_type)
 
         self._close_browser()
@@ -39,27 +42,7 @@ class Scraper:
         self.browser = webdriver.Chrome(options=self._set_chrome_options())
         wait = WebDriverWait(self.browser, 10)
 
-        self.browser.get(self.base_url)
-
-        search_bar = self.browser.find_element(
-            "xpath",
-            "/html/body/div[3]/div/div/section[1]/div/div/div[1]/div/form/div/span/input[2]",
-        )
-        wait.until(EC.visibility_of(search_bar))
-        search_bar.send_keys(resource)
-        search_bar.submit()
-
-        try:
-            first_result = self.browser.find_element(
-                "xpath", '//*[@id="results"]/div/div[2]/div[1]/div/div/a/div/div[1]/img'
-            )
-            wait.until(EC.visibility_of(first_result))
-            first_result.click()
-
-        except:
-            self.browser.quit()
-
-            raise ValueError("resource not found")
+        self.browser.get(f"{self.base_url}/{self.resource_type.value}/{resource}/")
 
     def _close_browser(self):
         self.browser.quit()
@@ -130,9 +113,9 @@ class Scraper:
         chrome_options = webdriver.ChromeOptions()
 
         chrome_options.add_argument("--no-sandbox")
-        chrome_options.add_argument("--headless")
-        chrome_options.add_argument("--window-size=1920,1080")
-        chrome_options.add_argument("--disable-gpu")
+        # chrome_options.add_argument("--headless")
+        # chrome_options.add_argument("--window-size=1920,1080")
+        # chrome_options.add_argument("--disable-gpu")
         chrome_options.add_argument("--disable-extensions")
         chrome_options.add_argument("--disable-popup-blocking")
         chrome_options.add_argument("--disable-notifications")

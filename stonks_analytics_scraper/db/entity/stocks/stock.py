@@ -4,7 +4,7 @@ from stonks_analytics_scraper.db.entity.stocks.stock_statistics import (
     StockStatistics,
 )
 
-from sqlalchemy import Date, String
+from sqlalchemy import Date, Integer, String
 from sqlalchemy.orm import DeclarativeBase, Mapped, mapped_column, relationship
 from sqlalchemy.schema import Index, UniqueConstraint
 
@@ -24,7 +24,7 @@ class Stock(Base):
     name = mapped_column(String(50), nullable=False)
     cnpj = mapped_column(String(18), nullable=False)
     ticker = mapped_column(String(10), nullable=False)
-    foundation_date = mapped_column(Date, nullable=True)
+    foundation_year = mapped_column(Integer, nullable=True)
     sector = mapped_column(String(50), nullable=True)
     segment = mapped_column(String(50), nullable=True)
 

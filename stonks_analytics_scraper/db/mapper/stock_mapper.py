@@ -4,6 +4,7 @@ from stonks_analytics_scraper.db.entity.stocks import (
     StockStatistics,
 )
 from stonks_analytics_scraper.db.mapper.mapper import Mapper
+from stonks_analytics_scraper.db.mapper.namedtuple import StockTuple
 from stonks_analytics_scraper.scraper.shape.stocks import STOCK_SHAPE
 
 from collections import namedtuple
@@ -12,23 +13,14 @@ from collections import namedtuple
 class StockMapper(Mapper):
     data_shape: list[dict] = STOCK_SHAPE
 
-    parsed_data = namedtuple(
-        "ParsedData",
-        [
-            "stock",
-            "stock_price",
-            "stock_statistics",
-        ],
-    )
-
-    def map(self, data: dict) -> parsed_data:
+    def map(self, data: dict) -> StockTuple:
         stock = self.parse_stock(data)
 
         stock_price = self.parse_stock_price(data)
 
         stock_statistics = self.parse_stock_statistics(data)
 
-        return self.parsed_data(
+        return StockTuple(
             stock=stock,
             stock_price=stock_price,
             stock_statistics=stock_statistics,

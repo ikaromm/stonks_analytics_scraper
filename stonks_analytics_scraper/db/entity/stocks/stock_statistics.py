@@ -1,13 +1,19 @@
 from stonks_analytics_scraper.db.entity.base import Base
 
-from sqlalchemy import Double, ForeignKey
+from sqlalchemy import Double, ForeignKey, Integer, UniqueConstraint
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 
 
 class StockStatistics(Base):
     __tablename__ = "stock_statistics"
+    __table_args__ = (
+        UniqueConstraint("stock_id", "month", "year", name="unique_stock_statistics"),
+    )
 
     stock_id = mapped_column(ForeignKey("stock.id"), nullable=False)
+
+    month = mapped_column(Integer, nullable=True)
+    year = mapped_column(Integer, nullable=True)
 
     net_revenue = mapped_column(Double, nullable=True)
     ebitda = mapped_column(Double, nullable=True)

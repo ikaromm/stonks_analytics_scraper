@@ -24,7 +24,7 @@ class Scraper:
     def scrape(self, resource: str) -> dict:
         self._open_resource(resource)
 
-        data = {}
+        data = {"ticker": resource}
 
         for data_type in self.data_shape:
             data[data_type["name"]] = self._get_data(data_type)

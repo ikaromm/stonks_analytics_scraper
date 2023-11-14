@@ -13,7 +13,7 @@ STOCK_SHAPE = [
     },
     {
         # Ano de criação
-        "name": "foundation_date",
+        "name": "foundation_year",
         "path": '//*[@id="data_about"]/div[2]/div/div[1]/table/tbody/tr[5]/td[2]',
         "type": DataType.NUMERIC,
     },

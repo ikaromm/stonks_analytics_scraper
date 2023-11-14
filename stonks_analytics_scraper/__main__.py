@@ -1,9 +1,11 @@
-from stonks_analytics_scraper.db.repository.stock_repository import StockRepository
-from stonks_analytics_scraper.scraper.shape.stocks import STOCK_SHAPE
+from stonks_analytics_scraper.db.repository.fii_repository import FiiRepository
+from stonks_analytics_scraper.db.repository.stock_repository import (
+    StockRepository,
+)
 from stonks_analytics_scraper.scraper.scraper import Scraper
+from stonks_analytics_scraper.scraper.shape.stocks import STOCK_SHAPE
 
-from sqlalchemy import create_engine, URL
-
+from sqlalchemy import URL, create_engine
 
 
 def main():
@@ -37,7 +39,9 @@ def main():
     )
     engine = create_engine(url)
 
-    stock_repository = StockRepository(engine)
+    # stock_repository = StockRepository(engine)
+    fii_repository = FiiRepository(engine)
+
 
 if __name__ == "__main__":
     main()

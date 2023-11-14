@@ -1,9 +1,9 @@
+from stonks_analytics_scraper.db.entity.base import Base
 from stonks_analytics_scraper.db.entity.stocks import (
     Stock,
     StockPrice,
     StockStatistics,
 )
-from stonks_analytics_scraper.db.entity.base import Base
 
 from sqlalchemy.engine import Engine
 
@@ -11,7 +11,7 @@ from sqlalchemy.engine import Engine
 class StockRepository:
     def __init__(self, engine: Engine):
         self.engine = engine
-        
+
         Base.metadata.create_all(engine)
 
     def save_stock(self, stock: Stock):

@@ -1,22 +1,24 @@
-from typing import List
-
 from stonks_analytics_scraper.db.entity.base import Base
-from sqlalchemy import String, Date
-from sqlalchemy.orm import DeclarativeBase, Mapped, mapped_column, relationship
-from sqlalchemy.schema import UniqueConstraint, Index
-
 from stonks_analytics_scraper.db.entity.stocks.stock_price import StockPrice
-from stonks_analytics_scraper.db.entity.stocks.stock_statistics import StockStatistics
+from stonks_analytics_scraper.db.entity.stocks.stock_statistics import (
+    StockStatistics,
+)
+
+from sqlalchemy import Date, String
+from sqlalchemy.orm import DeclarativeBase, Mapped, mapped_column, relationship
+from sqlalchemy.schema import Index, UniqueConstraint
+
+from typing import List
 
 
 class Stock(Base):
-    __tablename__ = 'stock'
+    __tablename__ = "stock"
 
     __table_args__ = (
-        UniqueConstraint('name', 'cnpj', 'ticker', name='unique_stock'),
-        Index('idx_stock_name', 'name'),
-        Index('idx_stock_cnpj', 'cnpj'),
-        Index('idx_stock_ticker', 'ticker'),
+        UniqueConstraint("name", "cnpj", "ticker", name="unique_stock"),
+        Index("idx_stock_name", "name"),
+        Index("idx_stock_cnpj", "cnpj"),
+        Index("idx_stock_ticker", "ticker"),
     )
 
     name = mapped_column(String(50), nullable=False)

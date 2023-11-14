@@ -1,4 +1,4 @@
-from sqlalchemy import BigInteger, Double, BigInteger
+from sqlalchemy import BigInteger, Double
 from sqlalchemy.orm import DeclarativeBase, mapped_column, reconstructor
 from sqlalchemy.schema import UniqueConstraint
 

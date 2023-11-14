@@ -1,10 +1,9 @@
+from stonks_analytics_scraper.db.entity.base import Base
 from stonks_analytics_scraper.db.entity.fiis import (
     Fii,
     FiiPrice,
     FiiStatistics,
 )
-
-from stonks_analytics_scraper.db.entity.base import Base
 
 from sqlalchemy.engine import Engine
 
@@ -12,7 +11,7 @@ from sqlalchemy.engine import Engine
 class FiiRepository:
     def __init__(self, engine: Engine):
         self.engine = engine
-        
+
         Base.metadata.create_all(engine)
 
     def save_fii(self, fii: Fii):

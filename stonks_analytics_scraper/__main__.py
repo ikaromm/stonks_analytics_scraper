@@ -1,5 +1,4 @@
 from stonks_analytics_scraper.db.mapper.stock_mapper import StockMapper
-from stonks_analytics_scraper.db.repository.fii_repository import FiiRepository
 from stonks_analytics_scraper.db.repository.stock_repository import (
     StockRepository,
 )
@@ -8,6 +7,12 @@ from stonks_analytics_scraper.scraper.scraper import Scraper
 from stonks_analytics_scraper.scraper.shape.stocks import STOCK_SHAPE
 
 from sqlalchemy import URL, create_engine
+
+from threading import Thread
+
+
+def thread_worker(resource: str, results: list):
+    results.append(Scraper(data_shape=STOCK_SHAPE).scrape(resource))
 
 
 def main():
@@ -25,13 +30,11 @@ def main():
     stock_service = StockService(stock_repository)
     # fii_repository = FiiRepository(engine)
 
-    scraper = Scraper(data_shape=STOCK_SHAPE)
-
     companies = [
-        # "petr4",
+        "petr4",
         "vale3",
-        # "bbas3",
-        # "bbdc4",
+        "bbas3",
+        "bbdc4",
         # "itub4",
         # "abev3",
         # "bbse3",
@@ -42,10 +45,18 @@ def main():
         # "cple6",
     ]
 
-    STOCK_MAPPER = StockMapper()
+    threads = []
+    results = []
     for company in companies:
-        data = scraper.scrape(company)
+        thread = Thread(target=thread_worker, args=(company, results))
+        threads.append(thread)
+        thread.start()
 
+    for thread in threads:
+        thread.join()
+
+    STOCK_MAPPER = StockMapper()
+    for data in results:
         parsed_data = STOCK_MAPPER.map(data)
 
         stock_service.save_scrapped_data(parsed_data)

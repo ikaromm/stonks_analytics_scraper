@@ -1,3 +1,5 @@
+from __future__ import annotations
+
 from stonks_analytics_scraper.utils.data_type import DataType
 
 from selenium import webdriver
@@ -74,11 +76,15 @@ class Scraper:
             case _:
                 raise ValueError("data type not supported")
 
-    def _get_string(self, xpath: str) -> str:
+    def _get_string(self, xpath: str) -> str | None:
         return self._wait_value(xpath)
 
-    def _get_numeric(self, xpath: str) -> float:
-        value = self._wait_value(xpath).replace(".", "").replace(",", ".")
+    def _get_numeric(self, xpath: str) -> float | None:
+        value = self._wait_value(xpath)
+        if value is None:
+            return None
+
+        value = value.replace(".", "").replace(",", ".")
 
         scale = 10**0
 
@@ -108,11 +114,14 @@ class Scraper:
         value = self._wait_value(data_type["path"])
         return datetime.strptime(value, data_type["format"])
 
-    def _wait_value(self, xpath: str) -> str:
-        wait = WebDriverWait(self.browser, 10)
-        wait.until(EC.visibility_of_element_located((By.XPATH, xpath)))
+    def _wait_value(self, xpath: str) -> str | None:
+        try:
+            wait = WebDriverWait(self.browser, 10)
+            wait.until(EC.visibility_of_element_located((By.XPATH, xpath)))
 
-        return self.browser.find_element("xpath", xpath).text
+            return self.browser.find_element("xpath", xpath).text
+        except:
+            return None
 
     def _set_chrome_options(self):
         """Sets chrome options for Selenium.
